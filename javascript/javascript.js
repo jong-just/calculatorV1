@@ -1,6 +1,7 @@
 const display = document.querySelector("#display");
 const results = document.querySelector("#results");
 const input = document.querySelector("#input");
+const operatorButtons = document.querySelectorAll(".operator");
 
 let valueOne = "";
 let valueTwo = "";
@@ -29,7 +30,22 @@ function getFirstValue() {
 
 }
 
-getFirstValue()
+// getFirstValue()
+
+function buttonAdd(a , b) {
+    return a + b;
+}
+
+function operatorCheck() {
+    operatorButtons.forEach((button) => {
+        button.addEventListener("click", () => {
+            console.log(button.id);
+            return button.id;
+        })
+    });
+}
+
+operatorCheck();
 
 // console.log(output);
 
