@@ -7,14 +7,57 @@ body {
     margin: 0;
 }
 
-#container {
-    margin: 8px;
+#background {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
-#results {
+#container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 8px;
+    border: 3px solid navy;
+    padding: 16px;
+}
+
+#display {
     border: 2px solid red;
     width: 480px;
     height: 120px;
+    margin-top: 12px;
+}
+
+#input {
+    /* LAYOUT */
+    display: flex;
+    align-items: center;
+    padding-left: 4px;
+
+    /* BOX */
+    border: 1px solid green;
+    height: 25%;
+
+    /* TEXT */
+    font-size: 20px;
+    color: grey;
+}
+
+#results {
+    /* LAYOUT */
+    display: flex;
+    justify-content: right;
+    align-items: center;
+    padding-right: 8px;
+
+    /* BOX */
+    border: 1px solid purple;
+    height: 75%;
+
+    /* TEXT */
+    font-size: 72px;
+    font-weight: bold;
 }
 
 #buttonGrid {
@@ -29,7 +72,7 @@ body {
     border: 2px solid black;
     padding: 8px;
     height: 102px;
-    width: 96px;
+    width: 102px;
     margin: 12px;
 
     /* LAYOUT */
