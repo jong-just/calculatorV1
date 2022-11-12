@@ -81,3 +81,7 @@ body {
     align-items: center;
     
 }
+
+.buttons:hover {
+    cursor: pointer;
+}

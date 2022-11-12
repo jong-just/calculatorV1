@@ -2,113 +2,82 @@ const display = document.querySelector("#display");
 const results = document.querySelector("#results");
 const input = document.querySelector("#input");
 const operatorButtons = document.querySelectorAll(".operator");
+const numButtons = document.querySelectorAll(".num");
 const equalsButton = document.querySelector("#buttonEquals");
-let valueOne = "";
-let valueTwo = "";
-let answer;
-let operatorFunction;
-let operatorSymbol = "";
+
+let displayValue = 0;
+let operator;
+let tempValue = "";
 
 
-function getValue() {
-    let tempValue = "";
-    for (let i = 0; i <= 9; i++) {
-        const buttons = document.querySelector(`#button${i}`);
-        buttons.addEventListener("click", () => {
-            tempValue += i;
-            displayOutput(parseInt(tempValue));
-            console.log(tempValue);
-            operatorButtons.forEach((button) => {
-                button.addEventListener("click", () => {
-                    console.log("test");
-                    return parseInt(tempValue);
-                })
-            });
-            
-        });
-    }
+const computeValues = {
+    first: 0,
+    second: 0,
+    answer: 0,
+};
+
+function operate(a, b, c) {
+    return c(a, b);
 }
 
-function getSecondValue() {
-    let tempValueTwo = "";
-
-    for (let i = 0; i <= 9; i++) {
-        const buttons = document.querySelector(`#button${i}`);
-        buttons.addEventListener("click", () => {
-            tempValueTwo += i;
-            displayOutput(parseInt(tempValueTwo));
-
-            return parseInt(tempValueTwo);
-        });
-    }
+function add(a, b) {
+    return a + b;
 }
 
-function calculate() {
-    valueOne = getValue();
-    console.log(valueOne);
-    operatorFunction = operatorPress();
-    valueTwo = getSecondValue();
-    console.log(valueTwo);
-    // outputResults(valueOne, valueTwo, operatorFunction);
+function subtract(a, b) {
+    return a - b;
 }
 
-equalsButton.addEventListener("click", () => {
-    answer = allTogether(valueOne, valueTwo, buttonAdd);
-    console.log(answer);
-});
+function multiply(a, b) {
+    return a * b;
+}
 
+function divide(a, b) {
+    return a / b;
+}
 
-function displayOutput(value) {
+function displayAnswer(displayValue) {
+    results.textContent = displayValue;
+    display.appendChild(results);
+}
+
+function displayNum(value) {
     results.textContent = value;
     display.appendChild(results);
 }
 
-
-
-function buttonAdd(a, b) {
-    return a + b;
-}
-
-function operatorPress() {
-    tempValue = ""
-    operatorButtons.forEach((button) => {
-        button.addEventListener("click", () => {
-            console.log(button.id);
-            results.textContent = "";
-            display.appendChild(results);
-            return button.id;
-        })
+numButtons.forEach((nbutton) => {
+    nbutton.addEventListener("click", () => {
+        tempValue += nbutton.textContent;
+        console.log(tempValue);
+        displayNum(tempValue);
     });
+});
 
+
+operatorButtons.forEach((button) => {
+    button.addEventListener("click", () => {
+        console.log(button.id);
+        results.textContent = "";
+        display.appendChild(results);
+        operator = getOperator(button.id);
+        computeValues.first = tempValue;
+        tempValue = "";
+    })
+});
+
+function getOperator(value) {
+    if (value == "buttonAdd") return add;
+    if (value == "buttonMinus") return subtract;
+    if (value == "buttonMulti") return multiply;
+    if (value == "buttonDivide") return divide;
 }
 
-//FUNCTION FOR OUTPUTTING OPERATOR SYMBOL
-// function getOperatorSymbol(operatorFunction) {
-//     return document.getElementById(`${operatorFunction}`).textContent;
-// }
+buttonEquals.addEventListener("click", () => {
+    computeValues.second = tempValue;
+    computeValues.answer = operate(parseInt(computeValues.first), parseInt(computeValues.second), operator);
+    displayAnswer(computeValues.answer);
+});
 
 
-// function outputResults(a, b, c) {
-//     let answer = c(a, b);
-// }
-
-
-
-
-
-function allTogether(a, b, c) {
-    return c(a, b);
-}
-
-
-calculate();
-
-
-
-console.log(operatorSymbol);
-
-
-// console.log(output);
-
-
-// results.textContent(output);
+// console.log(operate(computeValues.first, computeValues.second, add))
