@@ -85,3 +85,7 @@ body {
 .buttons:hover {
     cursor: pointer;
 }
+
+#buttonEquals {
+    height: 216px;
+}

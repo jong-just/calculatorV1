@@ -57,16 +57,23 @@ function fixNumber(a) {
 
 //function that adds value of the answer to the results DOM
 function displayAnswer(displayValue) {
-    results.textContent = displayValue;
-    display.appendChild(results);
+    if (isNaN(displayValue)) {
+        value = "Error";
+    } else {
+        results.textContent = parseFloat(displayValue).toLocaleString();
+        display.appendChild(results);
+    }
 }
 
 //function that adds value of input number to the results DOM
 function displayNum(value) {
-    results.textContent = parseFloat(value).toLocaleString();
-    display.appendChild(results);
+    if (isNaN(value)) {
+        value = "Error";
+    } else {
+        results.textContent = parseFloat(value).toLocaleString();
+        display.appendChild(results);
+    }
 }
-
 
 //function that makes the number buttons (0-9) function
 numButtons.forEach((nButton) => {
@@ -125,17 +132,24 @@ equalsButton.addEventListener("click", () => {
 
 //function that has the answer calculation logic. It inputs the current temp value into second value, inputs computeValues object into the operator function, and then outputs the results
 function calculateAnswer() {
-    //when you press the equals button, the current temp value is moved to the second value
-    computeValues.second = tempValue;
+    if (computeValues.first && tempValue) {
+        //when you press the equals button, the current temp value is moved to the second value
+        computeValues.second = tempValue;
 
-    //turn the first and second values into integers and sends the numbers and the operator function to the operator function
-    computeValues.answer = operate(parseFloat(computeValues.first), parseFloat(computeValues.second), operator);
-    displayAnswer(computeValues.answer);
+        //turn the first and second values into integers and sends the numbers and the operator function to the operator function
+        computeValues.answer = operate(parseFloat(computeValues.first), parseFloat(computeValues.second), operator);
+        displayAnswer(computeValues.answer);
 
-    //moves the answer value to first value to get ready for the next calculation
-    computeValues.first = computeValues.answer;
-    computeValues.answer = 0;
-    tempValue = "";
+        //moves the answer value to first value to get ready for the next calculation
+        computeValues.first = computeValues.answer;
+        computeValues.answer = 0;
+        tempValue = "";
+    } else {
+        computeValues.first = tempValue;
+        computeValues.answer = computeValues.first;
+        tempValue = "";
+    }
+
 }
 
 
@@ -143,6 +157,8 @@ function calculateAnswer() {
 buttonDeci.addEventListener("click", () => {
     if (tempValue[tempValue.length-1] != ".") {
         tempValue += ".";
+    } else if (tempValue == NaN) {
+        displayNum("0.");
     }
     displayNum(tempValue);
 });
@@ -171,3 +187,11 @@ buttonDel.addEventListener("click", () => {
 });
 
 // console.log(operate(computeValues.first, computeValues.second, add))
+
+
+
+
+
+//BUG LIST
+//pressing . doesn't show . immediately
+//can't show .0
