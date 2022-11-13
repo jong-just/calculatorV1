@@ -6,6 +6,7 @@ const numButtons = document.querySelectorAll(".num");
 const equalsButton = document.querySelector("#buttonEquals");
 const buttonClear = document.querySelector("#buttonClear");
 const buttonDeci = document.querySelector("#buttonPeriod");
+const buttonDel = document.querySelector("#buttonDelete");
 
 let displayValue = 0;
 let operator;
@@ -150,5 +151,10 @@ buttonClear.addEventListener("click", () => {
     reset();
 });
 
+//adding function of the delete button
+buttonDel.addEventListener("click", () => {
+    tempValue = tempValue.slice(0, -1);
+    displayNum(tempValue);
+});
 
 // console.log(operate(computeValues.first, computeValues.second, add))
