@@ -51,7 +51,7 @@ function divide(a, b) {
 
 //function to fix the .000000000000X issues
 function fixNumber(a) {
-    return (a)*1e12/1e12
+    return Math.round(a*1e12)/1e12
 }
 
 //function that adds value of the answer to the results DOM
