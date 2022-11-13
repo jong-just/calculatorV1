@@ -5,6 +5,7 @@ const operatorButtons = document.querySelectorAll(".operator");
 const numButtons = document.querySelectorAll(".num");
 const equalsButton = document.querySelector("#buttonEquals");
 const buttonClear = document.querySelector("#buttonClear");
+const buttonDeci = document.querySelector("#buttonPeriod");
 
 let displayValue = 0;
 let operator;
@@ -22,6 +23,7 @@ function operate(a, b, c) {
     //temp---------------
     console.log(`a: ${a}`);
     console.log(`b: ${b}`);
+    console.log(`c: ${c}`);
     console.log(`answer: ${c(a, b)}`)
 
     return c(a, b);
@@ -29,22 +31,27 @@ function operate(a, b, c) {
 
 //function for additional operator
 function add(a, b) {
-    return a + b;
+    return fixNumber(a + b);
 }
 
 //function for subtraction operator
 function subtract(a, b) {
-    return a - b;
+    return fixNumber(a - b);
 }
 
 //function for multiplication operator
 function multiply(a, b) {
-    return a * b;
+    return fixNumber(a * b);
 }
 
 //function for division operator
 function divide(a, b) {
-    return a / b;
+    return fixNumber(a / b);
+}
+
+//function to fix the .000000000000X issues
+function fixNumber(a) {
+    return (a)*1e12/1e12
 }
 
 //function that adds value of the answer to the results DOM
@@ -55,16 +62,16 @@ function displayAnswer(displayValue) {
 
 //function that adds value of input number to the results DOM
 function displayNum(value) {
-    results.textContent = value;
+    results.textContent = parseFloat(value).toLocaleString();
     display.appendChild(results);
 }
 
 
 //function that makes the number buttons (0-9) function
-numButtons.forEach((nbutton) => {
-    nbutton.addEventListener("click", () => {
+numButtons.forEach((nButton) => {
+    nButton.addEventListener("click", () => {
         //this adds the numbers from button press to a string to make it behave like a calculator
-        tempValue += nbutton.textContent;
+        tempValue += nButton.textContent;
 
         console.log(tempValue); //temp--------------
         displayNum(tempValue);
@@ -81,8 +88,8 @@ operatorButtons.forEach((button) => {
         //deciding what operator function should be used
         operator = getOperator(button.id);
 
-        //moves the current values on display to "first" value of object computeValues
-        computeValues.first = tempValue;
+        //moves the current values on display to "first" value of object computeValues. If statement helps for when multiple operators are pressed.
+        if (tempValue) computeValues.first = tempValue;
 
         //empties the temp string to be ready for next value input
         tempValue = "";
@@ -104,7 +111,7 @@ function getOperator(value) {
 }
 
 //adds function to the equals button
-buttonEquals.addEventListener("click", () => {
+equalsButton.addEventListener("click", () => {
     //when you press the equals button, the current temp value is moved to the second value
     computeValues.second = tempValue;
 
@@ -117,6 +124,16 @@ buttonEquals.addEventListener("click", () => {
     computeValues.answer = 0;
 });
 
+
+//adds function to decimal button
+buttonDeci.addEventListener("click", () => {
+    if (tempValue[tempValue.length-1] != ".") {
+        tempValue += ".";
+    }
+    displayNum(tempValue);
+});
+
+
 //function for resetting the calculator. flushes all values and clears screen
 function reset() {
     computeValues.first = 0;
@@ -125,7 +142,6 @@ function reset() {
     tempValue = "";
     displayValue = 0;
     cleanScreen();
-    console.log("test");
 }
 
 
