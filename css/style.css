@@ -18,15 +18,19 @@ body {
     flex-direction: column;
     align-items: center;
     margin: 8px;
-    border: 3px solid navy;
     padding: 16px;
+    background-color: #001524;
+    border: 8px solid #15616D;
+    border-radius: 8px;
 }
 
 #display {
-    border: 2px solid red;
+    border: 5px solid #15616D;
+    border-radius: 8px;
     width: 605px;
     height: 120px;
     margin-top: 12px;
+    background-color: #FFECD1;
 }
 
 #input {
@@ -50,14 +54,16 @@ body {
     justify-content: right;
     align-items: center;
     padding-right: 8px;
+    
 
     /* BOX */
-    border: 1px solid purple;
-    height: 75%;
+    height: 100%;
 
     /* TEXT */
     font-size: 72px;
     font-weight: bold;
+    font-family: "Playfair Display";
+    color: #78290F;
 }
 
 #buttonGrid {
@@ -67,13 +73,18 @@ body {
 .buttons {
     /* TEXT */
     font-size: 64px;
+    font-weight: bold;
+    font-family: "Playfair Display";
+    color: #78290F;
 
     /* BOX */
-    border: 2px solid black;
+    border: 5px solid #15616D;
+    border-radius: 8px;
     padding: 8px;
     height: 102px;
     width: 102px;
     margin: 12px;
+    background-color: #FFECD1;
 
     /* LAYOUT */
     display:flex;
@@ -88,4 +99,13 @@ body {
 
 #buttonEquals {
     height: 216px;
+    background-color:#FF7D00;
+}
+
+#buttonClear {
+    background-color: rgb(225, 40, 40);
+}
+
+#buttonDelete {
+    font-size: 56px;
 }
