@@ -4,6 +4,7 @@ const input = document.querySelector("#input");
 const operatorButtons = document.querySelectorAll(".operator");
 const numButtons = document.querySelectorAll(".num");
 const equalsButton = document.querySelector("#buttonEquals");
+const buttonClear = document.querySelector("#buttonClear");
 
 let displayValue = 0;
 let operator;
@@ -18,9 +19,11 @@ const computeValues = {
  
 //function that executes the operation, inputs: first value, second value, operator function
 function operate(a, b, c) {
+    //temp---------------
     console.log(`a: ${a}`);
     console.log(`b: ${b}`);
     console.log(`answer: ${c(a, b)}`)
+
     return c(a, b);
 }
 
@@ -63,7 +66,7 @@ numButtons.forEach((nbutton) => {
         //this adds the numbers from button press to a string to make it behave like a calculator
         tempValue += nbutton.textContent;
 
-        console.log(tempValue); //temp
+        console.log(tempValue); //temp--------------
         displayNum(tempValue);
     });
 });
@@ -71,10 +74,9 @@ numButtons.forEach((nbutton) => {
 //function that makes the operator buttons function
 operatorButtons.forEach((button) => {
     button.addEventListener("click", () => {
-        console.log(button.id); //temp
+        console.log(button.id); //temp--------------
         //this blanks out the display after the operator is pressed
-        results.textContent = "";
-        display.appendChild(results);
+        cleanScreen();
 
         //deciding what operator function should be used
         operator = getOperator(button.id);
@@ -86,6 +88,12 @@ operatorButtons.forEach((button) => {
         tempValue = "";
     })
 });
+
+//function from clearing the screen
+function cleanScreen() {
+    results.textContent = "";
+    display.appendChild(results);
+}
 
 //this determines what the operator does, using the id of the operator button
 function getOperator(value) {
@@ -109,11 +117,22 @@ buttonEquals.addEventListener("click", () => {
     computeValues.answer = 0;
 });
 
-function flushValues(a, b, c) {
-    a = 0;
-    b = 0;
-    c = 0;
+//function for resetting the calculator. flushes all values and clears screen
+function reset() {
+    computeValues.first = 0;
+    computeValues.second = 0;
+    computeValues.answer = 0;
+    tempValue = "";
+    displayValue = 0;
+    cleanScreen();
+    console.log("test");
 }
+
+
+//adding function to the reset button
+buttonClear.addEventListener("click", () => {
+    reset();
+});
 
 
 // console.log(operate(computeValues.first, computeValues.second, add))
