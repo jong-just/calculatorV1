@@ -8,15 +8,15 @@ const buttonClear = document.querySelector("#buttonClear");
 const buttonDeci = document.querySelector("#buttonPeriod");
 const buttonDel = document.querySelector("#buttonDelete");
 
-let displayValue = 0;
+let displayValue = null;
 let operator;
 let tempValue = "";
 
 //object that will hold the input and out from calculator
 const computeValues = {
-    first: 0,
-    second: 0,
-    answer: 0,
+    first: null,
+    second: null,
+    answer: null,
 };
  
 //function that executes the operation, inputs: first value, second value, operator function
@@ -86,14 +86,21 @@ operatorButtons.forEach((button) => {
         //this blanks out the display after the operator is pressed
         cleanScreen();
 
+        //this tests for doing multiple operator calculation before pressing =. (5+3-5*7 than press equals). Places before the operator function because one is already pressed, putting this below the operator function will cause it to replace
+        if (tempValue != "" && computeValues.first) {
+            calculateAnswer();
+        }
+
         //deciding what operator function should be used
         operator = getOperator(button.id);
 
         //moves the current values on display to "first" value of object computeValues. If statement helps for when multiple operators are pressed.
-        if (tempValue) computeValues.first = tempValue;
+        if (tempValue && computeValues.first == null) {
+            computeValues.first = tempValue;
 
-        //empties the temp string to be ready for next value input
-        tempValue = "";
+            //empties the temp string to be ready for next value input
+            tempValue = "";
+        }
     })
 });
 
@@ -113,6 +120,11 @@ function getOperator(value) {
 
 //adds function to the equals button
 equalsButton.addEventListener("click", () => {
+    calculateAnswer();
+});
+
+//function that has the answer calculation logic. It inputs the current temp value into second value, inputs computeValues object into the operator function, and then outputs the results
+function calculateAnswer() {
     //when you press the equals button, the current temp value is moved to the second value
     computeValues.second = tempValue;
 
@@ -121,9 +133,10 @@ equalsButton.addEventListener("click", () => {
     displayAnswer(computeValues.answer);
 
     //moves the answer value to first value to get ready for the next calculation
-    tempValue = computeValues.answer;
+    computeValues.first = computeValues.answer;
     computeValues.answer = 0;
-});
+    tempValue = "";
+}
 
 
 //adds function to decimal button
@@ -137,11 +150,11 @@ buttonDeci.addEventListener("click", () => {
 
 //function for resetting the calculator. flushes all values and clears screen
 function reset() {
-    computeValues.first = 0;
-    computeValues.second = 0;
-    computeValues.answer = 0;
+    computeValues.first = null;
+    computeValues.second = null;
+    computeValues.answer = null;
     tempValue = "";
-    displayValue = 0;
+    displayValue = null;
     cleanScreen();
 }
 
