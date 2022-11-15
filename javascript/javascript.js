@@ -21,12 +21,6 @@ const computeValues = {
  
 //function that executes the operation, inputs: first value, second value, operator function
 function operate(a, b, c) {
-    //temp---------------
-    console.log(`a: ${a}`);
-    console.log(`b: ${b}`);
-    console.log(`c: ${c}`);
-    console.log(`answer: ${c(a, b)}`)
-
     return c(a, b);
 }
 
@@ -80,8 +74,6 @@ numButtons.forEach((nButton) => {
     nButton.addEventListener("click", () => {
         //this adds the numbers from button press to a string to make it behave like a calculator
         tempValue += nButton.textContent;
-
-        console.log(tempValue); //temp--------------
         displayNum(tempValue);
     });
 });
@@ -89,7 +81,6 @@ numButtons.forEach((nButton) => {
 //function that makes the operator buttons function
 operatorButtons.forEach((button) => {
     button.addEventListener("click", () => {
-        console.log(button.id); //temp--------------
         //this blanks out the display after the operator is pressed
         cleanScreen();
 
@@ -185,9 +176,6 @@ buttonDel.addEventListener("click", () => {
     tempValue = tempValue.slice(0, -1);
     displayNum(tempValue);
 });
-
-// console.log(operate(computeValues.first, computeValues.second, add))
-
 
 
 
